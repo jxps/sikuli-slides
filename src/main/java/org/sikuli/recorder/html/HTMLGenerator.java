@@ -21,8 +21,9 @@ import com.google.common.io.Files;
 import org.stringtemplate.v4.*;
 
 public class HTMLGenerator {
-
-	public static void generate(File inputDir, File outputDir){
+    static STGroup stg = new STGroupFile("org/sikuli/recorder/html/html.stg", "utf-8", '$', '$');
+	
+    public static void generate(File inputDir, File outputDir){
 		List<Event> events = Events.readEventsFrom(inputDir);
 
 		if (!outputDir.exists()){
@@ -85,8 +86,8 @@ public class HTMLGenerator {
 			} catch (IOException e1) {				
 
 			}
-
-			pageListST.addAggr("pages.{url,name}", pageUrl, pageName);
+            Object [] URLName = {pageUrl, pageName};
+			pageListST.addAggr("pages.{url, name}", URLName);
 
 			if (firstPageUrl == null){
 				firstPageUrl = pageUrl;
@@ -108,7 +109,7 @@ public class HTMLGenerator {
 
 	}
 
-	static STGroup stg = new STGroupFile("org/sikuli/recorder/html/html.stg", "utf-8", '$', '$');
+	
 
 	public static void main(String[] args) throws MalformedURLException {
 
